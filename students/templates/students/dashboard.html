@@ -1,0 +1,217 @@
+{% extends "students/base.html" %}
+
+{% block title %}
+Dashboard - Student Management System
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .dashboard {
+        padding: 35px 40px;
+    }
+
+    .dashboard-header {
+        margin-bottom: 30px;
+    }
+
+    .dashboard-header h1 {
+        color: #0f2747;
+        margin-bottom: 7px;
+    }
+
+    .dashboard-header p {
+        color: #6b7280;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+        max-width: 1100px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+        border-left: 5px solid #0f2747;
+    }
+
+    .stat-title {
+        color: #6b7280;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .stat-number {
+        color: #0f2747;
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .session-card {
+        margin-top: 25px;
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        max-width: 1100px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+    .session-card h2 {
+        color: #0f2747;
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .session-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .session {
+        background: #eef2ff;
+        color: #3730a3;
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .actions {
+        margin-top: 30px;
+        display: flex;
+        gap: 12px;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        border-radius: 7px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .primary-btn {
+        background: #0f2747;
+        color: white;
+    }
+
+    .secondary-btn {
+        background: #e5e7eb;
+        color: #111827;
+    }
+
+    @media (max-width: 850px) {
+        .stats-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .dashboard {
+            padding: 25px 20px;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .actions {
+            flex-direction: column;
+        }
+
+        .btn {
+            text-align: center;
+        }
+    }
+</style>
+
+
+<div class="dashboard">
+
+    <div class="dashboard-header">
+        <h1>Dashboard</h1>
+        <p>Overview of the Student Management System</p>
+    </div>
+
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-title">Total Students</div>
+            <div class="stat-number">{{ total_students }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-title">Male Students</div>
+            <div class="stat-number">{{ male_students }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-title">Female Students</div>
+            <div class="stat-number">{{ female_students }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-title">Other Students</div>
+            <div class="stat-number">{{ other_students }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-title">Total Courses</div>
+            <div class="stat-number">{{ total_courses }}</div>
+        </div>
+
+    </div>
+
+
+    <div class="session-card">
+
+        <h2>Available Sessions</h2>
+
+        <div class="session-list">
+
+            {% for session in sessions %}
+
+                <span class="session">
+                    {{ session }}
+                </span>
+
+            {% empty %}
+
+                <span class="session">
+                    No session available
+                </span>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <div class="actions">
+
+        <a
+            href="{% url 'student_list' %}"
+            class="btn primary-btn"
+        >
+            View Students
+        </a>
+
+        <a
+            href="{% url 'add_student' %}"
+            class="btn secondary-btn"
+        >
+            + Add Student
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
